@@ -1,6 +1,0 @@
-mediapp-backend/.mvn
-mediapp-backend/.settings
-mediapp-backend/target
-
-*.project
-*.springBeans
