@@ -14,10 +14,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "consulta")
 public class Consulta {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idConsulta;
@@ -37,6 +41,8 @@ public class Consulta {
 	@OneToMany(mappedBy = "consulta", cascade = { CascadeType.ALL }, orphanRemoval = true)
 	private List<DetalleConsulta> detalleConsulta;
 
+	@ApiModelProperty(notes = "Numero de consultorio debe tener maximo 3 caracteres")
+	@Size(max = 3, message = "Numero de consultorio debe tener maximo 3 caracteres")
 	@Column(name = "num_consultorio", length = 3, nullable = true)
 	private String numConsultorio;
 
@@ -85,6 +91,14 @@ public class Consulta {
 
 	public void setNumConsultorio(String numConsultorio) {
 		this.numConsultorio = numConsultorio;
+	}
+
+	public List<DetalleConsulta> getDetalleConsulta() {
+		return detalleConsulta;
+	}
+
+	public void setDetalleConsulta(List<DetalleConsulta> detalleConsulta) {
+		this.detalleConsulta = detalleConsulta;
 	}
 
 	public LocalDateTime getFecha() {
