@@ -15,4 +15,20 @@ export class PacienteService {
   listar(){
     return this.http.get<Paciente[]>(this.url);
   }
+
+  listarPorId(idPaciente : number){
+    return this.http.get<Paciente[]>(`${this.url}/${idPaciente}`);
+  }
+
+  registrar (paciente : Paciente){
+    return this.http.post(this.url, paciente);
+  }
+
+  modificar(paciente : Paciente){
+    return this.http.put(this.url, paciente);
+  }
+
+  eliminar(idPaciente : number){
+    return this.http.delete(`${this.url}/${idPaciente}`);
+  }
 }

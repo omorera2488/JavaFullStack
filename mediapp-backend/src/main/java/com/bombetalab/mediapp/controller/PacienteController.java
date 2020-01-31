@@ -36,7 +36,7 @@ public class PacienteController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Paciente> getMembers(@PathVariable Integer id) {
+	public ResponseEntity<Paciente> getObject(@PathVariable Integer id) {
 		Paciente obj = pacienteService.listarPorId(id);
 		if (obj.getIdPaciente() == null) {
 			throw new ModeloNotFoundException("ID no encontrado" + id);

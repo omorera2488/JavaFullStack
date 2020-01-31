@@ -37,7 +37,7 @@ public class ConsultaController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Consulta> getMembers(@PathVariable Integer id) {
+	public ResponseEntity<Consulta> getObject(@PathVariable Integer id) {
 		Consulta obj = consultaService.listarPorId(id);
 		if (obj.getIdConsulta() == null) {
 			throw new ModeloNotFoundException("ID no encontrado" + id);

@@ -35,7 +35,7 @@ public class ExamenController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Examen> getMembers(@PathVariable Integer id) {
+	public ResponseEntity<Examen> getObject(@PathVariable Integer id) {
 		Examen obj = examenService.listarPorId(id);
 		if (obj.getIdExamen() == null) {
 			throw new ModeloNotFoundException("ID no encontrado" + id);
