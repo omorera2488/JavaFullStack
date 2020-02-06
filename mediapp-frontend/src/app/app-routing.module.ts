@@ -7,6 +7,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { PacienteEdicionComponent } from './pages/paciente/paciente-edicion/paciente-edicion.component';
 import { EspecialidadComponent } from './pages/especialidad/especialidad.component';
 import { EspecialidadEdicionComponent } from './pages/especialidad/especialidad-edicion/especialidad-edicion.component';
+import { EspecialComponent } from './pages/consulta/especial/especial.component';
+import { ConsultaComponent } from './pages/consulta/consulta.component';
 
 const routes: Routes = [
   {path:"paciente", component:PacienteComponent, children:[
@@ -23,8 +25,10 @@ const routes: Routes = [
   {path:"especialidad", component:EspecialidadComponent, children:[
     {path:"nuevo", component:EspecialidadEdicionComponent},
     {path:"edicion/:id", component:EspecialidadEdicionComponent}
-  ]}
-
+  ]},
+  { path: 'medico', component: MedicoComponent },
+  { path: 'consulta', component: ConsultaComponent },
+  { path: 'consulta-especial', component: EspecialComponent},
 ];
 
 @NgModule({
