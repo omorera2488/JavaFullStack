@@ -2,6 +2,7 @@ import { Paciente } from './../../../_model/paciente';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { PacienteService } from 'src/app/_service/paciente.service';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
 @Component({
   selector: 'app-paciente-edicion',
@@ -11,8 +12,14 @@ import { PacienteService } from 'src/app/_service/paciente.service';
 export class PacienteEdicionComponent implements OnInit {
 
   form: FormGroup;
+  id: number; // id del paciente en caso de edicion
+  edicionFlag: boolean; // flag para activar modo edicion
 
-  constructor(private pacienteService: PacienteService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private pacienteService: PacienteService,
+  ) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -25,9 +32,10 @@ export class PacienteEdicionComponent implements OnInit {
       'email': new FormControl('')
     });
 
-    this.pacienteService.listarPorId(1).subscribe(data => {
-      this.form.value['id'] = data.values.name['idPaciente'];
-      this.form.value['nombres'] = data.values.name['nombres'];
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
+      this.edicionFlag = params['id'] != null;
+      this.initForm();
     });
   }
 
@@ -39,11 +47,40 @@ export class PacienteEdicionComponent implements OnInit {
     paciente.dni = this.form.value['dni'];
     paciente.telefono = this.form.value['telefono'];
     paciente.direccion = this.form.value['direccion'];
-    paciente.direccion = this.form.value['email'];
+    paciente.email = this.form.value['email'];
 
-    this.pacienteService.registrar(paciente).subscribe(data => {
-      console.log('paciente creado');
-    });
+    if (this.edicionFlag) {
+      this.pacienteService.modificar(paciente).subscribe(() =>{
+        this.pacienteService.listar().subscribe(data =>{
+          this.pacienteService.pacienteCambio.next(data);
+          this.pacienteService.mensajeCambio.next("Paciente modificado");
+        });
+      });
+    }else{
+      this.pacienteService.registrar(paciente).subscribe(() =>{
+        this.pacienteService.listar().subscribe(data =>{
+          this.pacienteService.pacienteCambio.next(data);
+          this.pacienteService.mensajeCambio.next("Paciente registrado");
+        });
+      });
+    }
+    this.router.navigate(['paciente']);
+  }
+
+  initForm() {
+    if (this.edicionFlag) {
+      this.pacienteService.listarPorId(this.id).subscribe(data => {
+        this.form = new FormGroup({
+          'id': new FormControl(data.idPaciente),
+          'nombres': new FormControl(data.nombres),
+          'apellidos': new FormControl(data.apellidos),
+          'dni': new FormControl(data.dni),
+          'telefono': new FormControl(data.telefono),
+          'direccion': new FormControl(data.direccion),
+          'email': new FormControl(data.email)
+        });
+      });
+    }
   }
 
 }
