@@ -1,5 +1,6 @@
 package com.bombetalab.mediapp.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bombetalab.mediapp.dto.ConsultaExamenesDTO;
+import com.bombetalab.mediapp.dto.FiltroConsultaDTO;
 import com.bombetalab.mediapp.model.Consulta;
 import com.bombetalab.mediapp.repo.IConsultaExamenRepo;
 import com.bombetalab.mediapp.repo.IConsultaRepo;
@@ -60,4 +62,15 @@ public class ConsultaServiceImpl implements IConsultaService {
 	public Consulta modificar(Consulta obj) {
 		return consultaRepo.save(obj);
 	}
+
+	public List<Consulta> buscar(FiltroConsultaDTO filtro) {
+		return consultaRepo.buscar(filtro.getDni(), filtro.getNombreCompleto());
+
+	}
+
+	public List<Consulta> buscarFecha(FiltroConsultaDTO filtro) {
+		LocalDateTime fechaSgte = filtro.getFechaConsulta().plusDays(1);
+		return consultaRepo.buscarFecha(filtro.getFechaConsulta(), fechaSgte);
+	}
+
 }

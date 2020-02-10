@@ -1,6 +1,7 @@
 package com.bombetalab.mediapp.controller;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bombetalab.mediapp.dto.ConsultaExamenesDTO;
+import com.bombetalab.mediapp.dto.FiltroConsultaDTO;
 import com.bombetalab.mediapp.exception.ModeloNotFoundException;
 import com.bombetalab.mediapp.model.Consulta;
 import com.bombetalab.mediapp.service.IConsultaService;
@@ -71,5 +73,20 @@ public class ConsultaController {
 	public ResponseEntity<Boolean> deleteConsulta(@PathVariable Integer id) {
 		boolean result = consultaService.eliminar(id);
 		return new ResponseEntity<Boolean>(result, HttpStatus.NO_CONTENT);
+	}
+
+	@PostMapping("/buscar")
+	public ResponseEntity<List<Consulta>> buscar(@RequestBody FiltroConsultaDTO filtro) {
+		List<Consulta> consultas = new ArrayList<>();
+
+		if (filtro != null) {
+			if (filtro.getFechaConsulta() != null) {
+				consultas = consultaService.buscarFecha(filtro);
+			} else {
+				consultas = consultaService.buscar(filtro);
+			}
+
+		}
+		return new ResponseEntity<List<Consulta>>(consultas, HttpStatus.OK);
 	}
 }

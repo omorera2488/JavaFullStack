@@ -17,6 +17,9 @@ import { EspecialidadComponent } from './pages/especialidad/especialidad.compone
 import { EspecialidadEdicionComponent } from './pages/especialidad/especialidad-edicion/especialidad-edicion.component';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
 import { EspecialComponent } from './pages/consulta/especial/especial.component';
+import { WizardComponent } from './pages/consulta/wizard/wizard.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { BuscarComponent } from './pages/buscar/buscar.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import { EspecialComponent } from './pages/consulta/especial/especial.component'
     EspecialidadComponent,
     EspecialidadEdicionComponent,
     ConsultaComponent,
-    EspecialComponent
+    EspecialComponent,
+    WizardComponent,
+    BuscarComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,8 @@ import { EspecialComponent } from './pages/consulta/especial/especial.component'
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    FlexLayoutModule
   ],
   entryComponents: [
     MedicoEdicionComponent //esto porque va en un Dialogo, solo con Dialogos se hace esto
