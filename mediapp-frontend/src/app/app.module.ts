@@ -20,6 +20,7 @@ import { EspecialComponent } from './pages/consulta/especial/especial.component'
 import { WizardComponent } from './pages/consulta/wizard/wizard.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BuscarComponent } from './pages/buscar/buscar.component';
+import { BuscarDialogoComponent } from './pages/buscar/buscar-dialogo/buscar-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { BuscarComponent } from './pages/buscar/buscar.component';
     ConsultaComponent,
     EspecialComponent,
     WizardComponent,
-    BuscarComponent
+    BuscarComponent,
+    BuscarDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ import { BuscarComponent } from './pages/buscar/buscar.component';
     FlexLayoutModule
   ],
   entryComponents: [
-    MedicoEdicionComponent //esto porque va en un Dialogo, solo con Dialogos se hace esto
+    MedicoEdicionComponent, //esto porque va en un Dialogo, solo con Dialogos se hace esto
+    BuscarDialogoComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

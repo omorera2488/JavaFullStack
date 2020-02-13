@@ -1,5 +1,6 @@
+import { BuscarDialogoComponent } from './buscar-dialogo/buscar-dialogo.component';
 import { Consulta } from './../../_model/consulta';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { FiltroConsultaDTO } from './../../_dto/filtroConsultaDTO';
 import { ConsultaService } from './../../_service/consulta.service';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -22,6 +23,7 @@ export class BuscarComponent implements OnInit {
 
   constructor(
     private consultaService: ConsultaService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -74,6 +76,12 @@ export class BuscarComponent implements OnInit {
         this.dataSource.sort = this.sort;
       });
     }
+  }
+
+  verDetalle(consulta: Consulta) {
+    this.dialog.open(BuscarDialogoComponent, {
+      data: consulta
+    });
   }
 
 }

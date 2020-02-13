@@ -21,4 +21,14 @@ export class ConsultaService {
   buscar(filtroConsulta : FiltroConsultaDTO){
     return this.http.post<Consulta[]>(`${this.url}/buscar`, filtroConsulta);
   }
+
+  listarResumen(){
+    return this.http.get<ConsultaResumenDTO[]>(`${this.url}/listarResumen`);
+  }
+
+  generarReporte(){
+    return this.http.get(`${this.url}/generarReporte`, {
+      responseType: 'blob'
+    });
+  }
 }
