@@ -26,6 +26,8 @@ export class BuscarDialogoComponent implements OnInit {
   }
 
   listarExamenes(){
+    console.log(this.consulta);
+    console.log(this.consulta.idConsulta);
     this.consultaService.listarExamenPorConsulta(this.consulta.idConsulta).subscribe(data => {
       this.examenes = data;
     });

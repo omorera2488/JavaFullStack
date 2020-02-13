@@ -1,3 +1,4 @@
+import { ReporteComponent } from './pages/reporte/reporte.component';
 import { BuscarComponent } from './pages/buscar/buscar.component';
 import { WizardComponent } from './pages/consulta/wizard/wizard.component';
 import { ExamenEdicionComponent } from './pages/examen/examen-edicion/examen-edicion.component';
@@ -32,7 +33,8 @@ const routes: Routes = [
   { path: 'consulta', component: ConsultaComponent },
   { path: 'consulta-especial', component: EspecialComponent},
   { path: 'consulta-wizard', component: WizardComponent},
-  { path: 'buscar', component: BuscarComponent}
+  { path: 'buscar', component: BuscarComponent},
+  { path: 'reporte', component: ReporteComponent}
 ];
 
 @NgModule({

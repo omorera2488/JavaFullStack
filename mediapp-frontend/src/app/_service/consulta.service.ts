@@ -4,6 +4,7 @@ import { FiltroConsultaDTO } from './../_dto/filtroConsultaDTO';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
+import { ConsultaResumenDTO } from '../_dto/consultaResumenDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,9 @@ export class ConsultaService {
     return this.http.get(`${this.url}/generarReporte`, {
       responseType: 'blob'
     });
+  }
+
+  listarExamenPorConsulta(idConsulta: number){
+    return this.http.get<ConsultaListaExamenDTO[]>(`${environment.HOST}/consultaExamenes/${idConsulta}`);
   }
 }
