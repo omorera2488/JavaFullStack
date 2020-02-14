@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bombetalab.mediapp.dto.ConsultaExamenesDTO;
+import com.bombetalab.mediapp.dto.ConsultaResumenDTO;
 import com.bombetalab.mediapp.dto.FiltroConsultaDTO;
 import com.bombetalab.mediapp.exception.ModeloNotFoundException;
 import com.bombetalab.mediapp.model.Consulta;
@@ -88,5 +90,19 @@ public class ConsultaController {
 
 		}
 		return new ResponseEntity<List<Consulta>>(consultas, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/listarResumen")
+	public ResponseEntity<List<ConsultaResumenDTO>> listarResumen() {
+		List<ConsultaResumenDTO> consultas = new ArrayList<>();
+		consultas = consultaService.listarResumen();
+		return new ResponseEntity<List<ConsultaResumenDTO>>(consultas, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/generarReporte", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<byte[]> generarReporte(){
+		byte[] data = null;
+		data = consultaService.generarReporte();
+		return new ResponseEntity<byte[]>(data, HttpStatus.OK);
 	}
 }
