@@ -36,4 +36,17 @@ export class ConsultaService {
   listarExamenPorConsulta(idConsulta: number){
     return this.http.get<ConsultaListaExamenDTO[]>(`${environment.HOST}/consultaExamenes/${idConsulta}`);
   }
+
+  guardarArchivo(data: File){
+    let formdata: FormData = new FormData();
+    formdata.append('adjunto', data);
+
+    return this.http.post(`${this.url}/guardarArchivo`, formdata);
+  }
+
+  leerArchivo(){
+    return this.http.get(`${this.url}/leerArchivo/1`, {
+      responseType: 'blob'
+    });
+  }
 }

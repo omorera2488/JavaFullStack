@@ -1,6 +1,7 @@
 import { ConsultaService } from './../../_service/consulta.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-reporte',
@@ -13,14 +14,39 @@ export class ReporteComponent implements OnInit {
   chart: any;
   pdfSrc: string;
 
+  archivosSeleccionados: FileList;
+  archivoSeleccionado: File;
+  nombreArchivo: string;
+
+  imagenData: any;
+  imagenEstado: boolean;
+
   constructor(
-    private consultaService : ConsultaService
+    private consultaService : ConsultaService,
+    private sanitization: DomSanitizer
   ) { }
 
   ngOnInit() {
     this.tipo = 'line';
-
     this.dibujar();    
+
+    this.consultaService.leerArchivo().subscribe(data => {
+      this.convertir(data);
+    });
+  }
+
+  convertir(data: any){
+    let reader = new FileReader();
+    reader.readAsDataURL(data);
+    reader.onloadend = () => {
+      let base46Img = reader.result; 
+      this.setear(base46Img);      
+    }
+  }
+
+  setear(base46Img: any){
+    this.imagenData = this.sanitization.bypassSecurityTrustResourceUrl(base46Img);
+    this.imagenEstado = true;
   }
 
   cambiar(tipo: string){
@@ -102,5 +128,23 @@ export class ReporteComponent implements OnInit {
       a.click();
     });
   }
-}
 
+  seleccionarArchivo(e: any){
+    this.nombreArchivo = e.target.files[0].name;
+    this.archivosSeleccionados = e.target.files;
+  }
+
+  subirArchivo(){
+    this.archivoSeleccionado = this.archivosSeleccionados.item(0);
+
+    this.consultaService.guardarArchivo(this.archivoSeleccionado).subscribe(data => console.log(data));
+  }
+
+  accionImagen(accion: string){
+    if(accion === "M"){
+      this.imagenEstado = true;
+    }else{
+      this.imagenEstado = false;
+    }    
+  }  
+}
