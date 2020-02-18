@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfi {
+public class SwaggerConfig {
 
 	public static final Contact DEFAULT_CONTACT = new Contact("Bombeta Lab", "Bombetalab.com", "info@bombetalab.com");
 
