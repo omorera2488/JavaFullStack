@@ -10,6 +10,7 @@ import { Paciente } from 'src/app/_model/paciente';
 })
 export class PacienteComponent implements OnInit {
 
+  cantidad = 0;
   displayedColumns = ['idPaciente', 'nombres', 'apellidos', 'acciones'];
   dataSource: MatTableDataSource<Paciente>;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -31,10 +32,19 @@ export class PacienteComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
     });
 
+    //Get all
+    /*
     this.pacienteService.listar().subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+    });*/
+
+    //Listar Pageable - por defecto pagina 0 y de 10 en 10
+    this.pacienteService.listarPageable(0,10).subscribe(data => {
+      this.cantidad =  data.totalElements;
+      this.dataSource = new MatTableDataSource(data.content);
+      this.dataSource.sort = this.sort;
     });
   }
 
@@ -51,4 +61,11 @@ export class PacienteComponent implements OnInit {
     });
   }
 
+  mostrarMas(e:any){
+    this.pacienteService.listarPageable(e.pageIndex,e.pageSize).subscribe(data => {
+      this.cantidad =  data.totalElements;
+      this.dataSource = new MatTableDataSource(data.content);
+      this.dataSource.sort = this.sort;
+    });
+  }
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,6 +36,12 @@ public class PacienteController {
 		List<Paciente> lista = pacienteService.listar();
 		return new ResponseEntity<List<Paciente>>(lista, HttpStatus.OK);
 	}
+	
+	@GetMapping("/pageable")
+	public ResponseEntity<Page<Paciente>> getAllPageable(Pageable pageable) {
+		Page<Paciente> pagina = pacienteService.listarPageable(pageable);
+		return new ResponseEntity<Page<Paciente>>(pagina, HttpStatus.OK);
+	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Paciente> getObject(@PathVariable Integer id) {
@@ -43,8 +51,8 @@ public class PacienteController {
 		}
 		return new ResponseEntity<Paciente>(obj, HttpStatus.OK);
 	}
-	/*
-	// Ejemplo Heateoas
+	
+	/*// Ejemplo Heateoas
 	@GetMapping("/hateoas/{id}")
 	public EntityModel<Paciente> listarPorHateas(@PathVariable Integer id) {
 		Paciente obj = pacienteService.listarPorId(id);
@@ -53,8 +61,8 @@ public class PacienteController {
 		WebMvcLinkBuilder linkTo = LinkTo(methodOn(this.getClass()).listarPorId(id));
 		recurso.add(linkTo.withRel("paciente-resource"));
 		return recurso;
-	}
-	*/
+	}*/
+	
 	@PostMapping(consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Object> registrarPaciente(@Valid @RequestBody Paciente obj) {
 		Paciente objPaciente = pacienteService.registrar(obj);

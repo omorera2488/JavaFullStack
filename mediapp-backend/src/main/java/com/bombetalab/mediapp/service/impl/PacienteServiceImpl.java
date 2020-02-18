@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.bombetalab.mediapp.model.Paciente;
@@ -19,6 +21,11 @@ public class PacienteServiceImpl implements IPacienteService {
 	@Override
 	public List<Paciente> listar() {
 		return pacienteRepo.findAll();
+	}
+	
+	@Override
+	public Page<Paciente> listarPageable(Pageable pageable){
+		return pacienteRepo.findAll(pageable);
 	}
 
 	@Override
