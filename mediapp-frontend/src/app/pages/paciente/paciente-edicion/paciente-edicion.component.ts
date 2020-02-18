@@ -1,6 +1,6 @@
 import { Paciente } from './../../../_model/paciente';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PacienteService } from 'src/app/_service/paciente.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
@@ -24,12 +24,12 @@ export class PacienteEdicionComponent implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       'id': new FormControl(0),
-      'nombres': new FormControl(''),
-      'apellidos': new FormControl(''),
+      'nombres': new FormControl('', [Validators.required, Validators.minLength(3)]),
+      'apellidos': new FormControl('', Validators.required),
       'dni': new FormControl(''),
       'telefono': new FormControl(''),
       'direccion': new FormControl(''),
-      'email': new FormControl('')
+      'email': new FormControl('', Validators.email)
     });
 
     this.route.params.subscribe((params: Params) => {
@@ -39,7 +39,14 @@ export class PacienteEdicionComponent implements OnInit {
     });
   }
 
+  get formCtrls(){return this.form.controls;}
+
   submit() {
+
+    if(this.form.invalid){
+      return;
+    }
+
     let paciente = new Paciente();
     paciente.idPaciente = this.form.value['id'];
     paciente.nombres = this.form.value['nombres'];

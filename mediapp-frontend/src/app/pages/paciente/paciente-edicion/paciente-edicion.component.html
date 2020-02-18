@@ -10,6 +10,8 @@
     </div>
 
     <mat-form-field class="example-full-width">
+        <div class="invalido" *ngIf="formCtrls.nombres.errors?.required">Nombre es requerido.</div>
+        <div class="invalido" *ngIf="formCtrls.nombres.errors?.minlength">El campo debe tener minimo 3 caracters.</div>
         <input matInput placeholder="Nombres" minlength="3" required formControlName="nombres">
     </mat-form-field>
 
