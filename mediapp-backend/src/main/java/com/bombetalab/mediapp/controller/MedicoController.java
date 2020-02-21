@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,8 @@ public class MedicoController {
 	@Autowired
 	private IMedicoService medicoService;
 
+	@PreAuthorize("@authServiceImpl.tieneAcceso('listar')")
+	// @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
 	@GetMapping
 	public ResponseEntity<List<Medico>> getAll() {
 		List<Medico> lista = medicoService.listar();
