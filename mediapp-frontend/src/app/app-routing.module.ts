@@ -19,28 +19,28 @@ import { ConsultaComponent } from './pages/consulta/consulta.component';
 
 const routes: Routes = [
   {path:"paciente", component:PacienteComponent, children:[
-    {path:"nuevo", component:PacienteEdicionComponent},
-    {path:"edicion/:id", component:PacienteEdicionComponent}
-  ]},
-  {
-    path:"medico", component:MedicoComponent
+      {path:"nuevo", component:PacienteEdicionComponent},
+      {path:"edicion/:id", component:PacienteEdicionComponent}
+    ], canActivate: [GuardService]
   },
   {path:"examen", component:ExamenComponent, children:[
-    {path:"nuevo", component:ExamenEdicionComponent},
-    {path:"edicion/:id", component:ExamenEdicionComponent}
-  ]},
+      {path:"nuevo", component:ExamenEdicionComponent},
+      {path:"edicion/:id", component:ExamenEdicionComponent}
+    ], canActivate: [GuardService]
+  },
   {path:"especialidad", component:EspecialidadComponent, children:[
-    {path:"nuevo", component:EspecialidadEdicionComponent},
-    {path:"edicion/:id", component:EspecialidadEdicionComponent}
-  ]},
-  { path: 'medico', component: MedicoComponent },
-  { path: 'consulta', component: ConsultaComponent },
-  { path: 'consulta-especial', component: EspecialComponent},
-  { path: 'consulta-wizard', component: WizardComponent},
-  { path: 'buscar', component: BuscarComponent},
-  { path: 'reporte', component: ReporteComponent},
-  { path: 'not-403', component: Not403Component },
-  { path: 'not-404', component: Not404Component },
+      {path:"nuevo", component:EspecialidadEdicionComponent},
+      {path:"edicion/:id", component:EspecialidadEdicionComponent}
+    ], canActivate: [GuardService]
+  },
+  { path: 'medico', component: MedicoComponent, canActivate: [GuardService] },
+  { path: 'consulta', component: ConsultaComponent, canActivate: [GuardService] },
+  { path: 'consulta-especial', component: EspecialComponent, canActivate: [GuardService]},
+  { path: 'consulta-wizard', component: WizardComponent, canActivate: [GuardService]},
+  { path: 'buscar', component: BuscarComponent, canActivate: [GuardService]},
+  { path: 'reporte', component: ReporteComponent, canActivate: [GuardService]},
+  { path: 'not-403', component: Not403Component, canActivate: [GuardService] },
+  { path: 'not-404', component: Not404Component, canActivate: [GuardService] },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'not-404', pathMatch: 'full'}

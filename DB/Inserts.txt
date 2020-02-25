@@ -1,4 +1,4 @@
-INSERT INTO Rol (id_rol, nombre, descripcion) VALUES (1, 'ADMIN', 'Administrador');
+﻿INSERT INTO Rol (id_rol, nombre, descripcion) VALUES (1, 'ADMIN', 'Administrador');
 INSERT INTO Rol (id_rol, nombre, descripcion) VALUES (2, 'USER', 'Usuario');
 INSERT INTO Rol (id_rol, nombre, descripcion) VALUES (3, 'DBA', 'Admin de bd');
 
@@ -30,23 +30,6 @@ INSERT INTO menu_rol (id_menu, id_rol) VALUES (3, 2);
 INSERT INTO menu_rol (id_menu, id_rol) VALUES (4, 2);
 INSERT INTO menu_rol (id_menu, id_rol) VALUES (5, 2);
 INSERT INTO menu_rol (id_menu, id_rol) VALUES (6, 2);
-
-create table oauth_access_token (
-  token_id VARCHAR(256),
-  token bytea,
-  authentication_id VARCHAR(256),
-  user_name VARCHAR(256),
-  client_id VARCHAR(256),
-  authentication bytea,
-  refresh_token VARCHAR(256)
-);
-
-create table oauth_refresh_token (
-  token_id VARCHAR(256),
-  token bytea,
-  authentication bytea
-);
-
 
 select m.* from menu_rol mr 
 inner join usuario_rol ur on ur.id_rol = mr.id_rol 
