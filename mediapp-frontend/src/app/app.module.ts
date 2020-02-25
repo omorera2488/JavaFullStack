@@ -1,7 +1,8 @@
+import { environment } from './../environments/environment';
 import { MaterialModule } from './material/material.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,6 +25,13 @@ import { BuscarDialogoComponent } from './pages/buscar/buscar-dialogo/buscar-dia
 import { ReporteComponent } from './pages/reporte/reporte.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { LoginComponent } from './pages/login/login.component';
+import { Not404Component } from './pages/not404/not404.component';
+import { Not403Component } from './pages/not403/not403.component';
+
+export function tokenGetter(){
+  let tk = sessionStorage.getItem(environment.TOKEN_NAME);
+  return tk != null ? tk : '';
+}
 
 @NgModule({
   declarations: [
@@ -42,7 +50,9 @@ import { LoginComponent } from './pages/login/login.component';
     BuscarComponent,
     BuscarDialogoComponent,
     ReporteComponent,
-    LoginComponent
+    LoginComponent,
+    Not404Component,
+    Not403Component
   ],
   imports: [
     BrowserModule,
@@ -53,7 +63,14 @@ import { LoginComponent } from './pages/login/login.component';
     ReactiveFormsModule,
     FormsModule,
     FlexLayoutModule,
-    PdfViewerModule
+    PdfViewerModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:8080'],
+        blacklistedRoutes: ['http://localhost:8080/login/enviarCorreo']
+      }
+    })
   ],
   entryComponents: [
     MedicoEdicionComponent, //esto porque va en un Dialogo, solo con Dialogos se hace esto
