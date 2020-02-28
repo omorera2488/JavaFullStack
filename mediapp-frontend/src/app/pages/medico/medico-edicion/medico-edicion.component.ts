@@ -39,7 +39,7 @@ export class MedicoEdicionComponent implements OnInit {
         return  this.medicoService.listar();
       })).subscribe(data => {
         this.medicoService.medicoCambio.next(data);
-          this.medicoService.mensajeCambio.next('Medico modificado');
+        this.medicoService.mensajeCambio.next('Medico modificado');
       });
     }else{
       //REGISTRAR
