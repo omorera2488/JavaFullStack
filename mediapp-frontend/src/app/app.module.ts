@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PacienteComponent } from './pages/paciente/paciente.component';
 import { MedicoComponent } from './pages/medico/medico.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PacienteEdicionComponent } from './pages/paciente/paciente-edicion/paciente-edicion.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MedicoEdicionComponent } from './pages/medico/medico-edicion/medico-edicion.component';
@@ -27,6 +27,10 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { LoginComponent } from './pages/login/login.component';
 import { Not404Component } from './pages/not404/not404.component';
 import { Not403Component } from './pages/not403/not403.component';
+import { RecuperarComponent } from './pages/login/recuperar/recuperar.component';
+import { TokenComponent } from './pages/login/recuperar/token/token.component';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { ServerErrorsInterceptor } from './_shared/server-errors.interceptor';
 
 export function tokenGetter(){
   let tk = sessionStorage.getItem(environment.TOKEN_NAME);
@@ -52,7 +56,9 @@ export function tokenGetter(){
     ReporteComponent,
     LoginComponent,
     Not404Component,
-    Not403Component
+    Not403Component,
+    RecuperarComponent,
+    TokenComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +82,14 @@ export function tokenGetter(){
     MedicoEdicionComponent, //esto porque va en un Dialogo, solo con Dialogos se hace esto
     BuscarDialogoComponent
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ServerErrorsInterceptor,
+      multi: true,
+    },
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
